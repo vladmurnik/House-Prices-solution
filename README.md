@@ -17,11 +17,9 @@ The solution uses:
 
 ```
 .
-├── data/
-│   ├── train.csv
-│   └── test.csv
 ├── out.csv          # Generated submission file
 ├── main.py          # Training & prediction script
+├── requirements.txt # Requirements for libraries
 └── README.md
 ```
 
