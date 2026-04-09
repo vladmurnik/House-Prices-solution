@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.pipeline import Pipeline
 from catboost import CatBoostRegressor
+from sklearn.impute import SimpleImputer
 
 # Load data
 test = pd.read_csv("data/test.csv")
@@ -15,8 +16,10 @@ test = test.drop(columns=columns_to_drop)
 train = train.drop(columns=columns_to_drop)
 
 # Fill missing values in numeric columns
-train = train.fillna(train.mean(numeric_only=True))
-test = test.fillna(test.mean(numeric_only=True))
+imputer = SimpleImputer(strategy="median")
+imputer.fit(train)
+train = imputer.transform(train)
+test = imputer.transform(test)
 
 X_train, y_train = train.drop("SalePrice", axis=1), train["SalePrice"]
 X_test = test.copy()
@@ -25,8 +28,10 @@ X_test = test.copy()
 cat_features = X_train.select_dtypes(include=["object", "string", "category"]).columns.tolist()
 
 # Fill missing values in numeric features
-X_train = X_train.fillna(X_train.mean(numeric_only=True))
-X_test = X_test.fillna(X_test.mean(numeric_only=True))
+X_imputer = SimpleImputer(strategy="median")
+X_imputer.fit(X_train)
+X_train = X_imputer.transform(X_train)
+X_test = X_imputer.transform(X_test)
 
 # Fill missing values in categorical features
 X_train[cat_features] = X_train[cat_features].fillna("missing")
