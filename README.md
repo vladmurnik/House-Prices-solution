@@ -30,8 +30,8 @@ The solution uses:
 ### 1. Clone repository
 
 ```bash
-git clone <your-repo-url>
-cd <repo>
+git clone <https://github.com/vladmurnik/House-Prices-solution>
+cd <House-Prices-solution>
 ```
 
 ### 2. Install dependencies
